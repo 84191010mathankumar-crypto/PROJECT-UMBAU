@@ -1,0 +1,28 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --kuka-orange: #ff6000;
+  --kuka-dark:   #1a1c1f;
+  --kuka-grey:   #2b2d31;
+  --kuka-light:  #f4f6fa;
+  --panel-bg:    #12141a;
+  --panel-border: #2a2d35;
+  --text-primary: #e8eaf0;
+  --text-muted:   #7b8693;
+  --success:  #10b981;
+  --error:    #ef4444;
+  --info:     #3b6fff;
+}
+
+html, body, #root {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--kuka-dark);
+  font-family: 'SF Mono', 'Fira Mono', 'Cascadia Code', monospace;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--panel-bg); }
+::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 3px; }
