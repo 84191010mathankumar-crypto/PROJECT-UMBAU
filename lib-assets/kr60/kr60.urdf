@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!-- KUKA KR 60-3  |  60 kg payload  |  2033 mm reach
+     Kinematic parameters approximate from KUKA KR-3 family specification.
+     All mesh filenames are intercepted by a custom loadMeshCb in KukaKR60Gantry.jsx
+     which generates procedural Three.js geometry — no actual STL files required. -->
+<robot name="kuka_kr60_3">
+
+  <!-- ── Links ─────────────────────────────────────────────────────── -->
+  <link name="base_link">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_base.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_1">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link1.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_2">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link2.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_3">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link3.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_4">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link4.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_5">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link5.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="link_6">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/kr60_link6.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <link name="flange"/>
+  <link name="tool0"/>
+
+  <!-- ── Joints ────────────────────────────────────────────────────── -->
+  <!-- joint_1: base rotation  ±185° -->
+  <joint name="joint_1" type="revolute">
+    <origin xyz="0 0 0.640" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="link_1"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.2289" upper="3.2289" effort="400" velocity="1.745"/>
+  </joint>
+
+  <!-- joint_2: shoulder  -130° to +20° -->
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0.260 0 0" rpy="0 0 0"/>
+    <parent link="link_1"/>
+    <child  link="link_2"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.2689" upper="0.3491" effort="400" velocity="1.396"/>
+  </joint>
+
+  <!-- joint_3: elbow  -100° to +144° -->
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0 0 0.780" rpy="0 0 0"/>
+    <parent link="link_2"/>
+    <child  link="link_3"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.7453" upper="2.5133" effort="350" velocity="1.396"/>
+  </joint>
+
+  <!-- joint_4: forearm roll  ±350° -->
+  <joint name="joint_4" type="revolute">
+    <origin xyz="0.035 0 0.030" rpy="0 0 0"/>
+    <parent link="link_3"/>
+    <child  link="link_4"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.1087" upper="6.1087" effort="120" velocity="2.793"/>
+  </joint>
+
+  <!-- joint_5: wrist bend  ±120° -->
+  <joint name="joint_5" type="revolute">
+    <origin xyz="0 0 0.690" rpy="0 0 0"/>
+    <parent link="link_4"/>
+    <child  link="link_5"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.0944" upper="2.0944" effort="120" velocity="2.443"/>
+  </joint>
+
+  <!-- joint_6: flange rotation  ±350° -->
+  <joint name="joint_6" type="revolute">
+    <origin xyz="0 0 0.098" rpy="0 0 0"/>
+    <parent link="link_5"/>
+    <child  link="link_6"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.1087" upper="6.1087" effort="75"  velocity="3.490"/>
+  </joint>
+
+  <!-- Max reach: 0.260+0.780+0.035+0.690+0.098+0.170 = 2.033 m ✓ -->
+  <joint name="link6-flange" type="fixed">
+    <origin xyz="0 0 0.170" rpy="0 0 0"/>
+    <parent link="link_6"/>
+    <child  link="flange"/>
+  </joint>
+
+  <joint name="link6-tool0" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="flange"/>
+    <child  link="tool0"/>
+  </joint>
+
+</robot>

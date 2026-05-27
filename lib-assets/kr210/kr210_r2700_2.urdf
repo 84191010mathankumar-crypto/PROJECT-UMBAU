@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<robot name="kuka_kr210_r2700_2">
+
+  <!-- BASE -->
+  <link name="base_link">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/base_link.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 1 -->
+  <link name="link_1">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_1.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 2 -->
+  <link name="link_2">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_2.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 3 -->
+  <link name="link_3">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_3.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 4 -->
+  <link name="link_4">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_4.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 5 -->
+  <link name="link_5">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_5.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- LINK 6 -->
+  <link name="link_6">
+    <visual>
+      <geometry><mesh filename="package://robot/meshes/link_6.stl"/></geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  <!-- FLANGE (end-effector attachment point) -->
+  <link name="flange"/>
+  <link name="tool0"/>
+
+  <!-- JOINTS -->
+
+  <!-- joint_1: A1 - waist rotation about Z, rpy="-pi 0 0" frame -->
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child  link="link_1"/>
+    <origin xyz="0 0 0" rpy="-3.141592653589793 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.2288591161895095" upper="3.2288591161895095"
+           effort="7290" velocity="2.0384"/>
+  </joint>
+
+  <!-- joint_2: A2 - shoulder, rpy="pi/2 0 0", offset (0.33, 0, -0.645) -->
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child  link="link_2"/>
+    <origin xyz="0.33 0 -0.645" rpy="1.5707963267948963 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.443460952792061" upper="-0.0872664625997165"
+           effort="8910" velocity="1.9451"/>
+  </joint>
+
+  <!-- joint_3: A3 - elbow, rpy="0 0 -pi/2", offset (1.15, 0, 0) -->
+  <joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child  link="link_3"/>
+    <origin xyz="1.15 0 0" rpy="0 0 -1.5707963267948963"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.0943951023931953" upper="2.9321531433504737"
+           effort="6988.847" velocity="1.9548"/>
+  </joint>
+
+  <!-- joint_4: A4 - wrist roll, rpy="pi/2 0 0", offset (0.115, 0, 0) -->
+  <joint name="joint_4" type="revolute">
+    <parent link="link_3"/>
+    <child  link="link_4"/>
+    <origin xyz="0.115 0 0" rpy="1.5707963267948963 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.1086523819801535" upper="6.1086523819801535"
+           effort="2274.292" velocity="3.1241"/>
+  </joint>
+
+  <!-- joint_5: A5 - wrist pitch, rpy="-pi/2 0 0", offset (0, 0, -1.22) -->
+  <joint name="joint_5" type="revolute">
+    <parent link="link_4"/>
+    <child  link="link_5"/>
+    <origin xyz="0 0 -1.22" rpy="-1.5707963267948963 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.181661564992912" upper="2.181661564992912"
+           effort="1398.303" velocity="3.0019"/>
+  </joint>
+
+  <!-- joint_6: A6 - wrist yaw, rpy="pi/2 0 0", offset (0, 0, 0) -->
+  <joint name="joint_6" type="revolute">
+    <parent link="link_5"/>
+    <child  link="link_6"/>
+    <origin xyz="0 0 0" rpy="1.5707963267948963 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.1086523819801535" upper="6.1086523819801535"
+           effort="781.555" velocity="3.8397"/>
+  </joint>
+
+  <!-- Flange: end-effector mount -->
+  <joint name="link6-flange" type="fixed">
+    <parent link="link_6"/>
+    <child  link="flange"/>
+    <origin xyz="0 0 -0.215" rpy="0 1.5707963267948963 0"/>
+  </joint>
+
+  <!-- Tool0: standard ROS-Industrial zero tool frame -->
+  <joint name="link6-tool0" type="fixed">
+    <parent link="link_6"/>
+    <child  link="tool0"/>
+    <origin xyz="0 0 -0.215" rpy="0 3.141592653589793 0"/>
+  </joint>
+
+</robot>
